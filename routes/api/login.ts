@@ -7,6 +7,7 @@ export const handler: Handlers = {
     const form = await req.formData();
     const username = String(form.get("username"));
     const password = String(form.get("password"));
+    console.log(username, password, Deno.env.get("AUTH_USERNAME"));
     if (
       username === Deno.env.get("AUTH_USERNAME") &&
       password === Deno.env.get("AUTH_PASSWORD")
