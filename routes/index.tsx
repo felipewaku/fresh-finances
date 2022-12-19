@@ -1,7 +1,22 @@
 import { Head } from "$fresh/runtime.ts";
+import type { Handlers, PageProps } from "$fresh/server.ts";
+import { getCookies } from "std/http/cookie.ts";
 import Counter from "../islands/Counter.tsx";
 
-export default function Home() {
+export const handler: Handlers = {
+  GET(req, ctx) {
+    const cookies = getCookies(req.headers);
+    const isAllowed = cookies.auth === "bar";
+    if (!isAllowed) {
+      const url = new URL(req.url);
+      url.pathname = "login";
+      return Response.redirect(url);
+    }
+    return ctx.render!({ isAllowed });
+  },
+};
+
+export default function Home({ data }: PageProps<{ isAllowed: boolean }>) {
   return (
     <>
       <Head>
@@ -14,8 +29,8 @@ export default function Home() {
           alt="the fresh logo: a sliced lemon dripping with juice"
         />
         <p class="my-6">
-          Welcome to `fresh`. Try updating this message in the ./routes/index.tsx
-          file, and refresh.
+          Welcome to `fresh`. Try updating this message in the
+          ./routes/index.tsx file, and refresh.
         </p>
         <Counter start={3} />
       </div>
