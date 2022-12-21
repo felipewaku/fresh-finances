@@ -1,10 +1,11 @@
 import { Head } from "$fresh/runtime.ts";
 import type { Handlers, PageProps } from "$fresh/server.ts";
 import { getCookies } from "std/http/cookie.ts";
+import { DBConnection } from "../data/db.connection.ts";
 import Counter from "../islands/Counter.tsx";
 
 export const handler: Handlers = {
-  GET(req, ctx) {
+  async GET(req, ctx) {
     const cookies = getCookies(req.headers);
     const isAllowed = cookies.auth === "bar";
     if (!isAllowed) {
@@ -12,6 +13,14 @@ export const handler: Handlers = {
       url.pathname = "login";
       return Response.redirect(url);
     }
+
+    console.log(
+      await DBConnection.queryArray({
+        args: [1],
+        text: "SELECT $1",
+      })
+    );
+
     return ctx.render!({ isAllowed });
   },
 };
