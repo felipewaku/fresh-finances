@@ -8,7 +8,10 @@ import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 
 import twindPlugin from "$fresh/plugins/twind.ts";
+import { setupDB } from "./data/db.connection.ts";
 import twindConfig from "./twind.config.ts";
+
+await setupDB();
 
 await start(manifest, {
   plugins: [twindPlugin(twindConfig)],
