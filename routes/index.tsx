@@ -1,7 +1,7 @@
 import { Head } from "$fresh/runtime.ts";
 import type { Handlers, PageProps } from "$fresh/server.ts";
 import { getCookies } from "std/http/cookie.ts";
-import { DBConnection } from "../data/db.connection.ts";
+import { getDBConnection } from "../data/db.connection.ts";
 import Counter from "../islands/Counter.tsx";
 
 export const handler: Handlers = {
@@ -14,12 +14,14 @@ export const handler: Handlers = {
       return Response.redirect(url);
     }
 
+    const connection = await getDBConnection();
     console.log(
-      await DBConnection.queryArray({
+      await connection.queryArray({
         args: [1],
         text: "SELECT $1",
       })
     );
+    connection.release();
 
     return ctx.render!({ isAllowed });
   },

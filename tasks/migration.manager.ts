@@ -117,6 +117,7 @@ export class MigrationManager {
     } catch (error) {
       console.error(error);
       await transaction.rollback();
+      throw error;
     }
   }
 }

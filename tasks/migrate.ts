@@ -1,11 +1,15 @@
 import "std/dotenv/load.ts";
-import { DBConnection, setupDB } from "../data/db.connection.ts";
+import { getDBConnection } from "../data/db.connection.ts";
 import { MigrationManager } from "./migration.manager.ts";
 
-await setupDB();
+const connection = await getDBConnection();
 
-const migrationManager = new MigrationManager(DBConnection);
-await migrationManager.setup();
-await migrationManager.applyPendingMigrations();
-
-DBConnection.release();
+try {
+  const migrationManager = new MigrationManager(connection);
+  await migrationManager.setup();
+  await migrationManager.applyPendingMigrations();
+} catch (err) {
+  console.error(err);
+} finally {
+  connection.release();
+}
