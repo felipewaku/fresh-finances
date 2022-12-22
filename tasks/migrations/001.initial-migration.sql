@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS "money_transaction" (
   "ignore" BOOLEAN NOT NULL DEFAULT FALSE,
   "type" "public"."money_transaction_type_enum" NOT NULL DEFAULT 'INCOME',
   "value" integer NOT NULL,
+  "description" TEXT NOT NULL,
   "original_description" TEXT,
   "notes" TEXT,
   "category_id" integer NOT NULL
@@ -20,10 +21,7 @@ CREATE TABLE IF NOT EXISTS "money_transaction_category" (
   "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
   "deleted_at" TIMESTAMP,
   "name" TEXT NOT NULL,
-  "type" TEXT NOT NULL,
   "required" BOOLEAN NOT NULL
 );
-
-
 
 ALTER TABLE "money_transaction" ADD CONSTRAINT "money_transaction_category_key" FOREIGN KEY ("category_id") REFERENCES "money_transaction_category"("category_id") ON DELETE NO ACTION ON UPDATE NO ACTION;

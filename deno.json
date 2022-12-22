@@ -1,7 +1,8 @@
 {
   "tasks": {
     "start": "deno run -A --watch=static/,routes/ dev.ts",
-    "migrate": "deno run -A tasks/migrate.ts"
+    "migrate": "deno run -A tasks/migrate.ts",
+    "seed": "deno run -A tasks/seed.ts"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
