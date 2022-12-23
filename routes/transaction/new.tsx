@@ -1,10 +1,10 @@
 import { Head } from "$fresh/runtime.ts";
 
-export default function Login() {
+export default function CreateTransaction() {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Nova transação</title>
       </Head>
       <main>
         <div class="p-4 mx-auto max-w-screen-md">

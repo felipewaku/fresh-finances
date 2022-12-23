@@ -22,7 +22,7 @@ export const handler: Handlers = {
         path: "/",
         secure: true,
       });
-      headers.set("location", "/");
+      headers.set("location", "/transaction");
       return new Response(null, {
         status: 303,
         headers,
