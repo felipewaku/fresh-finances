@@ -29,5 +29,16 @@ export default {
     p: {
       margin: "8px 0px 8px 0px",
     },
+    table: {
+      border: "1px solid",
+    },
+    th: {
+      border: "1px solid",
+      padding: "8px",
+    },
+    td: {
+      border: "1px solid",
+      padding: "8px",
+    },
   }),
 } as Options;
