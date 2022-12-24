@@ -4,21 +4,23 @@
 
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/api/login.ts";
-import * as $1 from "./routes/index.tsx";
-import * as $2 from "./routes/logout.ts";
-import * as $3 from "./routes/transaction/_middleware.ts";
-import * as $4 from "./routes/transaction/index.tsx";
-import * as $5 from "./routes/transaction/new.tsx";
+import * as $1 from "./routes/api/transaction.ts";
+import * as $2 from "./routes/index.tsx";
+import * as $3 from "./routes/logout.ts";
+import * as $4 from "./routes/transaction/_middleware.ts";
+import * as $5 from "./routes/transaction/index.tsx";
+import * as $6 from "./routes/transaction/new.tsx";
 import * as $$0 from "./islands/Counter.tsx";
 
 const manifest = {
   routes: {
     "./routes/api/login.ts": $0,
-    "./routes/index.tsx": $1,
-    "./routes/logout.ts": $2,
-    "./routes/transaction/_middleware.ts": $3,
-    "./routes/transaction/index.tsx": $4,
-    "./routes/transaction/new.tsx": $5,
+    "./routes/api/transaction.ts": $1,
+    "./routes/index.tsx": $2,
+    "./routes/logout.ts": $3,
+    "./routes/transaction/_middleware.ts": $4,
+    "./routes/transaction/index.tsx": $5,
+    "./routes/transaction/new.tsx": $6,
   },
   islands: {
     "./islands/Counter.tsx": $$0,

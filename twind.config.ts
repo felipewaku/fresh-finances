@@ -40,5 +40,9 @@ export default {
       border: "1px solid",
       padding: "8px",
     },
+    input: {
+      border: "1px solid",
+      borderRadius: "5px",
+    },
   }),
 } as Options;

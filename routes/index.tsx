@@ -1,4 +1,20 @@
 import { Head } from "$fresh/runtime.ts";
+import { Handlers } from "$fresh/server.ts";
+import { deleteCookie, getCookies } from "std/http/cookie.ts";
+
+export const handler: Handlers = {
+  GET(req, ctx) {
+    const cookies = getCookies(req.headers);
+    const isAllowed = cookies.auth === "bar";
+    if (isAllowed) {
+      const url = new URL(req.url);
+      url.pathname = "/transaction";
+      return Response.redirect(url);
+    } else {
+      return ctx.render();
+    }
+  },
+};
 
 export default function Login() {
   return (
