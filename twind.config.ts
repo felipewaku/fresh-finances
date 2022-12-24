@@ -44,5 +44,9 @@ export default {
       border: "1px solid",
       borderRadius: "5px",
     },
+    textarea: {
+      border: "1px solid",
+      borderRadius: "5px",
+    },
   }),
 } as Options;

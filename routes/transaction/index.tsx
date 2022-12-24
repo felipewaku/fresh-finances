@@ -10,7 +10,7 @@ export const handler: Handlers = {
   async GET(req, ctx) {
     const datasource = new TransactionDatasource();
     const url = new URL(req.url);
-    const month = +url.searchParams.get("month")! || new Date().getMonth();
+    const month = +url.searchParams.get("month")! || (new Date().getMonth() + 1);
     const transactions = await datasource.listTransactionsByMonth(month);
 
     return ctx.render!({ transactions: transactions, month });

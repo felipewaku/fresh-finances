@@ -11,6 +11,16 @@ export interface Transaction {
   required: boolean;
 }
 
+interface SaveTransactionInput {
+  transactionDate: Date;
+  type: "INCOME" | "EXPENSE";
+  value: number;
+  description: string;
+  notes?: string;
+  category: number;
+  required: boolean;
+}
+
 export class TransactionDatasource {
   async listTransactionsByMonth(month: number) {
     let transactions: Transaction[];
@@ -44,5 +54,27 @@ ORDER BY "money_transaction"."transaction_date";`,
     }
 
     return transactions;
+  }
+
+  async saveTransaction(transaction: SaveTransactionInput): Promise<void> {
+    const connection = await getDBConnection();
+    try {
+      await connection.queryObject<Transaction>(
+        `INSERT INTO "money_transaction" ("transaction_date", "type", "value", "description", "notes", "category_id") VALUES ($1, $2, $3, $4, $5, $6);`,
+        [
+          transaction.transactionDate,
+          transaction.type,
+          transaction.value,
+          transaction.description,
+          transaction.notes,
+          transaction.category,
+        ]
+      );
+    } catch (error) {
+      console.error(error);
+      throw error;
+    } finally {
+      connection.release();
+    }
   }
 }
