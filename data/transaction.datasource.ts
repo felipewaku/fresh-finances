@@ -43,7 +43,7 @@ WHERE EXTRACT(MONTH FROM "money_transaction"."transaction_date") = $1
   AND EXTRACT(YEAR FROM "money_transaction"."transaction_date") = $2
   AND "money_transaction"."deleted_at" IS NULL
   AND "money_transaction_category"."category_id" IS NOT NULL
-ORDER BY "money_transaction"."transaction_date";`,
+ORDER BY "money_transaction"."transaction_date" DESC;`,
         [month, year]
       );
       transactions = result.rows;

@@ -6,21 +6,34 @@ import {
   TransactionDatasource,
 } from "../../data/transaction.datasource.ts";
 
+function safeGetSearchParam(
+  param: URLSearchParams,
+  key: string,
+  defaultValue: string
+): string {
+  const result = param.get(key);
+  if (result === null) {
+    return defaultValue;
+  }
+  return result;
+}
+
 export const handler: Handlers = {
   async GET(req, ctx) {
     const datasource = new TransactionDatasource();
     const url = new URL(req.url);
-    let month = +url.searchParams.get("month")!;
-    if (Number.isNaN(month)) {
-      month = new Date().getMonth() + 1;
-    }
+    const month = safeGetSearchParam(
+      url.searchParams,
+      "month",
+      `${new Date().getMonth()}`
+    );
+    const year = safeGetSearchParam(
+      url.searchParams,
+      "year",
+      `${new Date().getFullYear()}`
+    );
 
-    let year = +url.searchParams.get("year")!;
-    if (Number.isNaN(year) || year === 0) {
-      year = new Date().getFullYear();
-    }
-
-    const transactions = await datasource.listTransactions(month, year);
+    const transactions = await datasource.listTransactions(+month + 1, +year);
 
     return ctx.render!({ transactions: transactions, month, year });
   },
@@ -60,7 +73,19 @@ export default function Home({
             {format(nextMonth, "MM/yyyy")}
           </a>
         </div>
-        <a href="/transaction/new">Nova transação</a>
+        <div class="m-8" />
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <a
+            href="/transaction/new"
+            style={{
+              padding: "8px",
+              border: "1px solid",
+              borderRadius: "5px",
+            }}
+          >
+            Nova transação
+          </a>
+        </div>
         <div class="m-8" />
         <table>
           <tr>
