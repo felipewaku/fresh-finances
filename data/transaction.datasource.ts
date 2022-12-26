@@ -22,7 +22,7 @@ interface SaveTransactionInput {
 }
 
 export class TransactionDatasource {
-  async listTransactionsByMonth(month: number) {
+  async listTransactions(month: number, year: number) {
     let transactions: Transaction[];
     const connection = await getDBConnection();
     try {
@@ -40,10 +40,11 @@ LEFT JOIN "money_transaction_category"
   ON "money_transaction"."category_id" = "money_transaction_category"."category_id" 
     AND "money_transaction_category"."deleted_at" IS NULL
 WHERE EXTRACT(MONTH FROM "money_transaction"."transaction_date") = $1
+  AND EXTRACT(YEAR FROM "money_transaction"."transaction_date") = $2
   AND "money_transaction"."deleted_at" IS NULL
   AND "money_transaction_category"."category_id" IS NOT NULL
 ORDER BY "money_transaction"."transaction_date";`,
-        [month]
+        [month, year]
       );
       transactions = result.rows;
     } catch (error) {
